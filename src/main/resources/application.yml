@@ -2,3 +2,11 @@ wiki:
   request:
     url: "https://en.wikipedia.org/api/rest_v1/page/mobile-sections/List_of_country_calling_codes"
 
+spring:
+  thymeleaf:
+    prefix: classpath:/mytemplate/
+    suffix: .jsp
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
