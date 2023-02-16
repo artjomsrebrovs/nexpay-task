@@ -4,7 +4,6 @@ import com.nexpay.task.cache.CountriesCache;
 import com.nexpay.task.rest.CountriesController;
 import com.nexpay.task.rest.request.PhoneNumber;
 import com.nexpay.task.rest.response.CountryNameResponse;
-import jakarta.validation.Valid;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
