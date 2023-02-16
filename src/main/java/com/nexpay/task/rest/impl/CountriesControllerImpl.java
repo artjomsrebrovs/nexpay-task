@@ -2,8 +2,10 @@ package com.nexpay.task.rest.impl;
 
 import com.nexpay.task.cache.CountriesCache;
 import com.nexpay.task.rest.CountriesController;
-import com.nexpay.task.rest.requiest.PhoneNumber;
+import com.nexpay.task.rest.request.PhoneNumber;
+import com.nexpay.task.rest.response.CountryNameResponse;
 import jakarta.validation.Valid;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+@Log
 @RestController
 public class CountriesControllerImpl implements CountriesController {
 
@@ -27,8 +30,10 @@ public class CountriesControllerImpl implements CountriesController {
     }
 
     @PostMapping("/country")
-    public ResponseEntity<List<String>> getCountryByCode(@Valid @RequestBody final PhoneNumber phoneNumber, final Errors errors) {
-        final ResponseEntity<List<String>> response;
+    public ResponseEntity<CountryNameResponse> getCountryByCode(@Valid @RequestBody final PhoneNumber phoneNumber, final Errors errors) {
+        log.info(String.format("Fetching list of countries with a country code %s and phone number: %s ...", phoneNumber.getCode(), phoneNumber.getNumber()));
+
+        final ResponseEntity<CountryNameResponse> response;
         final List<String> errorMessages = new ArrayList<>();
 
         if (errors.hasErrors()) {
@@ -37,11 +42,11 @@ public class CountriesControllerImpl implements CountriesController {
                 errorMessages.add(objectError.getDefaultMessage());
             }
 
-            response = new ResponseEntity<>(errorMessages, HttpStatus.BAD_REQUEST);
+            response = new ResponseEntity<>(CountryNameResponse.FAIL(errorMessages), HttpStatus.BAD_REQUEST);
 
         } else {
             final List<String> countries = countriesCache.get(phoneNumber.getCode());
-            response = new ResponseEntity<>(countries, HttpStatus.OK);
+            response = new ResponseEntity<>(CountryNameResponse.SUCCESS(countries), HttpStatus.OK);
         }
 
         return response;

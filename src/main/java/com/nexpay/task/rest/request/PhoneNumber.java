@@ -1,13 +1,17 @@
-package com.nexpay.task.rest.requiest;
+package com.nexpay.task.rest.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PhoneNumber {
 
     @NotNull(message = "Country code should not be null")
@@ -18,7 +22,7 @@ public class PhoneNumber {
 
     @NotNull(message = "Phone number should not be null")
     @Pattern(regexp = "[0-9]+", message = "Phone number should be numeric")
-    @Size(max = 15, message = "Phone number code is too long")
+    @Size(max = 15, message = "Phone number is too long")
     @Size(min = 5, message = "Phone number is too short")
     private String number;
 }

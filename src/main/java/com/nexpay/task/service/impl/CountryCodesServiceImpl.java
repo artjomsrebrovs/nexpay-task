@@ -43,14 +43,14 @@ public class CountryCodesServiceImpl implements CountryCodesService {
         return Collections.unmodifiableList(countries);
     }
 
-    private List<String> extractCountryLines(final String listOfCountryCodesSection) {
+    List<String> extractCountryLines(final String listOfCountryCodesSection) {
         final Pattern pattern = Pattern.compile("<span>\\p{L}+</span></td><td align=\"right\"><a href=\"/wiki/\\+\\d+_?\\d+", Pattern.UNICODE_CHARACTER_CLASS);
         final String text = listOfCountryCodesSection.replace("\n", "").replace("\r", "");
         final Matcher matcher = pattern.matcher(text);
         return matcher.results().map(MatchResult::group).collect(Collectors.toList());
     }
 
-    private List<Country> parseCountryLines(final List<String> countryLines) {
+    List<Country> parseCountryLines(final List<String> countryLines) {
         final List<Country> countries = new ArrayList<>();
         for (final String countryLine : countryLines) {
             final String country = countryLine.substring(countryLine.indexOf("<span>") + 6, countryLine.indexOf("</span>"));
@@ -61,7 +61,7 @@ public class CountryCodesServiceImpl implements CountryCodesService {
         return countries;
     }
 
-    private void populateCountriesCache(final List<Country> countries) {
+    void populateCountriesCache(final List<Country> countries) {
         countries.forEach(countriesCache::put);
         log.info(String.format("Countries and codes cache populated successfully with %d entries", countries.size()));
     }

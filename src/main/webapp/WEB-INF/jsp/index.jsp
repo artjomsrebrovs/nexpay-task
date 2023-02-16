@@ -88,21 +88,25 @@
                 data: JSON.stringify(phoneNumber),
 
                 success: function (data) {
-                    if (data.length > 0) {
+                    console.log(data);
+
+                    if (data.countries.length > 0) {
                         resultSpan.empty();
                     }
 
-                    for (var i = 0; i < data.length; i++) {
-                        resultSpan.append('<div class="row"><h5 class="text-center">' + data[i] + '</h5></div>').append('\n');
+                    for (var i = 0; i < data.countries.length; i++) {
+                        resultSpan.append('<div class="row"><h5 class="text-center">' + data.countries[i] + '</h5></div>').append('\n');
                     }
                 },
                 error: function(e) {
-                    if (e.responseJSON.length > 0) {
+                    console.log(e);
+
+                    if (e.responseJSON.errors.length > 0) {
                         resultSpan.empty();
                     }
 
-                    for (var i = 0; i < e.responseJSON.length; i++) {
-                        resultSpan.append('<div class="row"><h5 class="text-center text-danger">' + e.responseJSON[i] + '</h5></div>').append('\n');
+                    for (var i = 0; i < e.responseJSON.errors.length; i++) {
+                        resultSpan.append('<div class="row"><h5 class="text-center text-danger">' + e.responseJSON.errors[i] + '</h5></div>').append('\n');
                     }
                 }
             });

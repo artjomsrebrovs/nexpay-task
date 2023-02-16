@@ -10,7 +10,6 @@ public class CountriesMvcControllerImpl implements CountriesMvcController {
 
     @GetMapping("/")
     public String viewBooks(final Model model) {
-        //model.addAttribute("books", bookService.getBooks());
         return "index";
     }
 }
